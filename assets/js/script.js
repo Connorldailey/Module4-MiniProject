@@ -51,7 +51,7 @@ function loadFromLocalStorage() {
       txtEl.textContent = text;
       txtEl.style.left = text.left;
       txtEl.style.top = text.top;
-      txtEl.classList.add("draggable");
+      txtEl.classList.add("text-item", "draggable");
       moodBoardEl.appendChild(txtEl);
     }
   }
@@ -111,9 +111,11 @@ function mouseMoveHandler(event) {
 function placeElementClickHandler(event) {
   if (currentElement) {
     // TODO: Explain what getBoundingClientRect() does
+    // Returns the smallest rectange which contains the entire element including padding and border width.
     const moodBoardRect = moodBoardEl.getBoundingClientRect();
 
     // TODO: Explain what the following code does
+    // Calculate the position of the element relative to the mood board
     const left = `${event.clientX - moodBoardRect.left}px`;
     const top = `${event.clientY - moodBoardRect.top}px`;
 
@@ -122,12 +124,14 @@ function placeElementClickHandler(event) {
     currentElement.style.top = top;
 
     // TODO: Explain why we remove the draggable class from the element
+    // The image can no longer be dragged after it has been placed on the mood board
     currentElement.classList.remove('draggable');
 
     // ? Append the element to the mood board with the already calculated position.
     moodBoardEl.appendChild(currentElement);
 
     // TODO: Explain what the `tagName` property is used for
+    // Returns the tag name of the element in uppercase
     if (currentElement.tagName === 'IMG') {
       // ? Push the image object to the tempStorageObject images property/array
       tempStorageObject.images.push({
